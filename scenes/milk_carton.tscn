@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbofktcmbgg1o"]
+
+[ext_resource type="Texture2D" uid="uid://c4cb4s00qr40h" path="res://assets/images/milk-carton.png" id="2_7tu27"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_021mk"]
+radius = 23.0
+height = 106.0
+
+[node name="MilkCarton" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CapsuleShape2D_021mk")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("2_7tu27")
