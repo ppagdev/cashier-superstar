@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://j0wxmo7saag1"]
+[gd_scene load_steps=4 format=3 uid="uid://j0wxmo7saag1"]
 
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_65j26"]
 [ext_resource type="Texture2D" uid="uid://c36oxq3sb64rt" path="res://assets/images/bread.png" id="1_xrml6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgu72"]
@@ -7,13 +8,16 @@ radius = 26.0
 height = 96.0
 
 [node name="Bread" type="Node2D"]
+script = ExtResource("1_65j26")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(5, -4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_jgu72")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture = ExtResource("1_xrml6")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

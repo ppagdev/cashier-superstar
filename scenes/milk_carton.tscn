@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbofktcmbgg1o"]
+[gd_scene load_steps=4 format=3 uid="uid://dbofktcmbgg1o"]
 
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_pnobe"]
 [ext_resource type="Texture2D" uid="uid://c4cb4s00qr40h" path="res://assets/images/milk-carton.png" id="2_7tu27"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_021mk"]
@@ -7,11 +8,14 @@ radius = 23.0
 height = 106.0
 
 [node name="MilkCarton" type="Node2D"]
+script = ExtResource("1_pnobe")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_021mk")
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture = ExtResource("2_7tu27")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

@@ -6,6 +6,8 @@ var milk_carton_scene = preload("res://scenes/milk_carton.tscn")
 var treadmill_speed = 100
 var spawn_time = 3
 var instanstiated_items = []
+@onready var spawn_zone_area = get_node("SpawnZone/CollisionShape2D")
+@onready var end_zone = get_node("EndZone")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,7 +15,7 @@ func _ready():
 
 func create_item(item_scene):
 	var item = item_scene.instantiate()
-	item.position = Vector2(0,360)
+	item.position = spawn_zone_area.position
 	add_child(item)
 	instanstiated_items.append(item)
 
@@ -38,3 +40,9 @@ func treadmill(delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	treadmill(delta)
+
+
+
+func _on_end_zone_area_entered(area):
+	area.queue_free()
+	instanstiated_items.erase(area)
