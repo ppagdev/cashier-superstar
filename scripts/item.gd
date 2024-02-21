@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var area2d = get_node("Area2D")
 var dragging = false
+var done = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

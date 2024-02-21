@@ -1,8 +1,10 @@
 extends Node2D
 
+var lose_screen_scene = "res://scenes/lose_screen.tscn"
 var bread_scene = preload("res://scenes/bread.tscn")
 var milk_carton_scene = preload("res://scenes/milk_carton.tscn")
 
+var lives = 3
 var treadmill_speed = 100
 var spawn_time = 3
 var instanstiated_items = []
@@ -37,12 +39,23 @@ func treadmill(delta):
 	for item in instanstiated_items:
 		item.position += Vector2(treadmill_speed * delta,  0)
 
+func lose():
+	get_tree().change_scene_to_file(lose_screen_scene)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	treadmill(delta)
-
-
+	if lives <= 0:
+		lose()
 
 func _on_end_zone_area_entered(area):
-	area.queue_free()
+	if area.get_parent().done:
+		return
 	instanstiated_items.erase(area)
+	area.queue_free()
+	lives -= 1
+
+
+func _on_scanner_zone_area_entered(area):
+	area.get_parent().done = true
+	print("scanned")

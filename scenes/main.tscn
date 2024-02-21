@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cra8lv3r55ymu" path="res://assets/images/cashier-background-demo.jpg" id="2_vfi74"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnmxc"]
-size = Vector2(759, 908)
+size = Vector2(261, 96)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nf8nf"]
 size = Vector2(295, 900)
@@ -29,10 +29,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("2_vfi74")
 
-[node name="MoveZone" type="Area2D" parent="."]
+[node name="ScannerZone" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveZone"]
-position = Vector2(605.5, 394)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScannerZone"]
+position = Vector2(605.5, 588)
 shape = SubResource("RectangleShape2D_wnmxc")
 
 [node name="EndZone" type="Area2D" parent="."]
@@ -49,4 +49,5 @@ position = Vector2(-81, 359)
 shape = SubResource("RectangleShape2D_wtx6t")
 debug_color = Color(0, 0.65098, 0.0862745, 0.419608)
 
+[connection signal="area_entered" from="ScannerZone" to="." method="_on_scanner_zone_area_entered"]
 [connection signal="area_entered" from="EndZone" to="." method="_on_end_zone_area_entered"]
