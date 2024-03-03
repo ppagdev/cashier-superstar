@@ -9,6 +9,7 @@ height = 96.0
 
 [node name="Bread" type="Node2D"]
 script = ExtResource("1_65j26")
+price = 0.21
 
 [node name="Area2D" type="Area2D" parent="."]
 

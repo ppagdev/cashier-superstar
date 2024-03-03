@@ -29,6 +29,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("2_vfi74")
 
+[node name="LivesZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LivesZone"]
+position = Vector2(1129, 68)
+shape = SubResource("RectangleShape2D_wnmxc")
+disabled = true
+
 [node name="ScannerZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScannerZone"]
@@ -49,5 +56,31 @@ position = Vector2(-81, 359)
 shape = SubResource("RectangleShape2D_wtx6t")
 debug_color = Color(0, 0.65098, 0.0862745, 0.419608)
 
+[node name="TimeElapsed" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 123.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.141176, 0.643137, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 75
+
+[node name="Button" type="Button" parent="."]
+process_mode = 3
+offset_left = 839.0
+offset_top = 20.0
+offset_right = 893.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "II"
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="area_entered" from="ScannerZone" to="." method="_on_scanner_zone_area_entered"]
 [connection signal="area_entered" from="EndZone" to="." method="_on_end_zone_area_entered"]
+[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

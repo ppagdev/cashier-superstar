@@ -9,6 +9,7 @@ height = 106.0
 
 [node name="MilkCarton" type="Node2D"]
 script = ExtResource("1_pnobe")
+price = 0.82
 
 [node name="Area2D" type="Area2D" parent="."]
 

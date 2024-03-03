@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvsgebw1du7f8"]
+
+[ext_resource type="Texture2D" uid="uid://bws3qb76qyquw" path="res://assets/images/heart-icon.png" id="1_igilk"]
+
+[node name="Life" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_igilk")
