@@ -4,11 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://c4cb4s00qr40h" path="res://assets/images/milk-carton.png" id="2_7tu27"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_021mk"]
-radius = 23.0
-height = 106.0
+radius = 57.0
+height = 266.0
 
 [node name="MilkCarton" type="Node2D"]
 script = ExtResource("1_pnobe")
+code = "6659"
 price = 0.82
 
 [node name="Area2D" type="Area2D" parent="."]

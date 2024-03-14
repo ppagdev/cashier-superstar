@@ -1,0 +1,605 @@
+[gd_scene load_steps=20 format=3 uid="uid://cppaoc50rmqk0"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_sput0"]
+[ext_resource type="Texture2D" uid="uid://dbbnur3xacckb" path="res://assets/images/conveyor-belt.png" id="2_jc6wb"]
+[ext_resource type="Texture2D" uid="uid://bbg3pkxq2ark" path="res://assets/images/conveyor-belt-shadow.png" id="3_ucopj"]
+[ext_resource type="Texture2D" uid="uid://d102g5w6h655b" path="res://assets/images/scanner.png" id="4_m4qfq"]
+[ext_resource type="Texture2D" uid="uid://d1o4rtyetvvit" path="res://assets/images/cashier-station-background.png" id="5_o8b60"]
+[ext_resource type="Texture2D" uid="uid://ddm11rkt4gsfx" path="res://assets/images/wall-background.png" id="6_xwawq"]
+[ext_resource type="Texture2D" uid="uid://bnp8tbaej1ib8" path="res://assets/images/supermarket-shelf.png" id="7_fet8h"]
+[ext_resource type="Texture2D" uid="uid://borsqvf11ol6o" path="res://assets/images/red-shopping-cart.png" id="8_11knr"]
+[ext_resource type="Texture2D" uid="uid://calami0ufya81" path="res://assets/images/pipe-vector-pack.png" id="9_7f04d"]
+[ext_resource type="Texture2D" uid="uid://dfewm1u7ikhsd" path="res://assets/images/metal-plate.png" id="10_adm5a"]
+[ext_resource type="Texture2D" uid="uid://csk18ofg0fvat" path="res://assets/images/clock.png" id="11_m2p4u"]
+[ext_resource type="Texture2D" uid="uid://bt6y8psbxm412" path="res://assets/images/keyboard-background.png" id="13_75mk7"]
+[ext_resource type="Texture2D" uid="uid://bmie83r2a05lx" path="res://assets/images/button.png" id="14_64kqr"]
+[ext_resource type="Texture2D" uid="uid://b6hfgqmrsck1s" path="res://assets/images/button-pressed.png" id="15_3ypxu"]
+[ext_resource type="AudioStream" uid="uid://dv3ka4og4t3cn" path="res://assets/music/cashier-superstar-main-menu-theme.wav" id="15_4gsc8"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qxbdk"]
+
+[sub_resource type="SystemFont" id="SystemFont_ycg2y"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="Shader" id="Shader_4eskb"]
+code = "shader_type canvas_item;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform float lod: hint_range(0.0, 5) = 0.0;
+
+void fragment(){
+	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV, lod);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5v5y"]
+shader = SubResource("Shader_4eskb")
+shader_parameter/lod = 3.0
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_sput0")
+
+[node name="ConveyorBeltImage" type="TextureRect" parent="."]
+z_index = -10
+offset_top = -41.0
+offset_right = 3938.0
+offset_bottom = 1399.0
+scale = Vector2(0.325, 0.325)
+texture = ExtResource("2_jc6wb")
+
+[node name="ConveyorBeltShadow" type="TextureRect" parent="."]
+offset_left = 905.0
+offset_top = 318.0
+offset_right = 16138.0
+offset_bottom = 3637.0
+rotation = -1.5708
+scale = Vector2(0.0151507, 0.0110634)
+texture = ExtResource("3_ucopj")
+expand_mode = 1
+
+[node name="ScannerImage" type="TextureRect" parent="."]
+z_index = -10
+offset_left = -126.0
+offset_top = 288.0
+offset_right = 3874.0
+offset_bottom = 2409.0
+scale = Vector2(0.215, 0.215)
+texture = ExtResource("4_m4qfq")
+
+[node name="CashierBackground" type="TextureRect" parent="."]
+z_index = -15
+offset_left = -31.0
+offset_top = 251.0
+offset_right = 2529.0
+offset_bottom = 1691.0
+scale = Vector2(0.53, 0.53)
+texture = ExtResource("5_o8b60")
+
+[node name="WallBackground" type="TextureRect" parent="."]
+z_index = -20
+offset_left = -43.0
+offset_top = -548.0
+offset_right = 2517.0
+offset_bottom = 892.0
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("6_xwawq")
+
+[node name="ShelfBackground" type="TextureRect" parent="."]
+z_index = -18
+offset_left = -97.0
+offset_top = -357.0
+offset_right = 666.0
+offset_bottom = 363.0
+scale = Vector2(1.195, 1.195)
+texture = ExtResource("7_fet8h")
+
+[node name="ShoppingCart" type="TextureRect" parent="."]
+z_index = -18
+offset_left = 803.0
+offset_top = -19.0
+offset_right = 1403.0
+offset_bottom = 511.0
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("8_11knr")
+
+[node name="RailingBackground" type="TextureRect" parent="."]
+z_index = -19
+offset_left = 725.0
+offset_top = -25.0
+offset_right = 2092.0
+offset_bottom = 465.0
+scale = Vector2(0.725, 0.725)
+texture = ExtResource("9_7f04d")
+
+[node name="RailingBackground2" type="TextureRect" parent="RailingBackground"]
+z_index = -20
+z_as_relative = false
+layout_mode = 0
+offset_left = 699.31
+offset_top = 794.483
+offset_right = 2066.31
+offset_bottom = 1284.48
+rotation = -1.5708
+scale = Vector2(0.725, 0.725)
+texture = ExtResource("9_7f04d")
+
+[node name="MetalPlateImage" type="TextureRect" parent="."]
+z_index = -5
+offset_left = 934.0
+offset_top = 99.0
+offset_right = 3494.0
+offset_bottom = 1763.0
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("10_adm5a")
+
+[node name="ClockImage" type="TextureRect" parent="."]
+z_index = -5
+offset_left = 877.0
+offset_top = 415.0
+offset_right = 3437.0
+offset_bottom = 1855.0
+scale = Vector2(0.175, 0.175)
+texture = ExtResource("11_m2p4u")
+
+[node name="ScannerLight" type="PointLight2D" parent="."]
+position = Vector2(303.5, 588.5)
+scale = Vector2(121, 45)
+color = Color(0.760784, 0, 0.14902, 1)
+range_z_max = -1
+texture = SubResource("PlaceholderTexture2D_qxbdk")
+
+[node name="ScannerLabel" type="Label" parent="."]
+offset_left = 55.0
+offset_top = 352.0
+offset_right = 551.0
+offset_bottom = 482.0
+theme_override_colors/font_color = Color(0, 0.564706, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 95
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyboardBackground" type="TextureRect" parent="."]
+offset_left = 379.0
+offset_top = 310.0
+offset_right = 2939.0
+offset_bottom = 1750.0
+scale = Vector2(0.305, 0.305)
+mouse_filter = 2
+texture = ExtResource("13_75mk7")
+
+[node name="Button9" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 827.0
+offset_top = 347.0
+offset_right = 1698.0
+offset_bottom = 1288.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button9"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "9"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button8" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 731.0
+offset_top = 347.0
+offset_right = 1602.0
+offset_bottom = 1288.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button8"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button7" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 635.0
+offset_top = 347.0
+offset_right = 1506.0
+offset_bottom = 1288.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button7"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 827.0
+offset_top = 438.0
+offset_right = 1698.0
+offset_bottom = 1379.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 731.0
+offset_top = 438.0
+offset_right = 1602.0
+offset_bottom = 1379.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 635.0
+offset_top = 438.0
+offset_right = 1506.0
+offset_bottom = 1379.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 827.0
+offset_top = 529.0
+offset_right = 1698.0
+offset_bottom = 1470.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 731.0
+offset_top = 529.0
+offset_right = 1602.0
+offset_bottom = 1470.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button1" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 635.0
+offset_top = 529.0
+offset_right = 1506.0
+offset_bottom = 1470.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonClear" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 827.0
+offset_top = 620.0
+offset_right = 1698.0
+offset_bottom = 1561.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="ButtonClear"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.794
+offset_top = -341.0
+offset_right = 123.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "C"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button00" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 731.0
+offset_top = 620.0
+offset_right = 1602.0
+offset_bottom = 1561.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button00"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.294
+offset_top = -341.0
+offset_right = 249.706
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button0" type="TextureButton" parent="." groups=["keyboard_buttons"]]
+offset_left = 635.0
+offset_top = 620.0
+offset_right = 1506.0
+offset_bottom = 1561.0
+scale = Vector2(0.085, 0.085)
+size_flags_horizontal = 4
+mouse_filter = 1
+disabled = true
+texture_normal = ExtResource("14_64kqr")
+texture_pressed = ExtResource("15_3ypxu")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Button0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -177.794
+offset_top = -341.0
+offset_right = 107.206
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_ycg2y")
+theme_override_font_sizes/font_size = 500
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayButton" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 100
+z_as_relative = false
+offset_left = -8.0
+offset_top = -11.0
+offset_right = 1287.0
+offset_bottom = 728.0
+theme_override_font_sizes/font_size = 100
+text = "TAP ANYWHERE TO START"
+flat = true
+
+[node name="BlurEffect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_r5v5y")
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MainMenuThemePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_4gsc8")
+volume_db = -30.0
+autoplay = true
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

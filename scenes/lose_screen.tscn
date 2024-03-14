@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cl7yhuepih2x0"]
+[gd_scene load_steps=3 format=3 uid="uid://cl7yhuepih2x0"]
 
 [ext_resource type="Script" path="res://scripts/lose_screen.gd" id="1_bracx"]
+[ext_resource type="Texture2D" uid="uid://d1vuj171c4mi4" path="res://assets/images/metal_rolling_shutter.jpg" id="2_uinl1"]
 
 [node name="LoseScreen" type="Control"]
 layout_mode = 3
@@ -9,7 +10,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_bracx")
+
+[node name="MetalShutter" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_top = -240.0
+offset_right = 1600.0
+offset_bottom = 960.0
+scale = Vector2(0.8, 0.8)
+mouse_filter = 2
+texture = ExtResource("2_uinl1")
 
 [node name="VSplitContainer" type="VSplitContainer" parent="."]
 layout_mode = 1
@@ -25,8 +37,9 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 100
-text = "YOU LOSE!!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -34,18 +47,13 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayAgainButton" type="Button" parent="VSplitContainer/HSplitContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 100
-text = "PLAY AGAIN"
-
 [node name="StartScreenButton" type="Button" parent="VSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 100
-text = "START SCREEN"
+disabled = true
+text = "TRY AGAIN"
 
-[connection signal="pressed" from="VSplitContainer/HSplitContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
 [connection signal="pressed" from="VSplitContainer/HSplitContainer/StartScreenButton" to="." method="_on_start_screen_button_pressed"]
