@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dcf50e3b6cqey"]
+[gd_scene load_steps=34 format=3 uid="uid://dcf50e3b6cqey"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_7r8et"]
 [ext_resource type="Texture2D" uid="uid://dbbnur3xacckb" path="res://assets/images/conveyor-belt.png" id="2_k6w47"]
@@ -15,17 +15,24 @@
 [ext_resource type="Texture2D" uid="uid://dfewm1u7ikhsd" path="res://assets/images/metal-plate.png" id="9_ej73w"]
 [ext_resource type="Texture2D" uid="uid://csk18ofg0fvat" path="res://assets/images/clock.png" id="9_lpd3e"]
 [ext_resource type="FontFile" uid="uid://cft4knxybha6t" path="res://assets/fonts/Kode_Mono/KodeMono-VariableFont_wght.ttf" id="11_v54fo"]
+[ext_resource type="Texture2D" uid="uid://b003v1w1mbkql" path="res://assets/images/pause.svg" id="13_4ywat"]
 [ext_resource type="Texture2D" uid="uid://d1vuj171c4mi4" path="res://assets/images/metal_rolling_shutter.jpg" id="16_3n32m"]
 [ext_resource type="AudioStream" uid="uid://cfr370uff1aur" path="res://assets/sound-effects/key-press.wav" id="17_4gt41"]
 [ext_resource type="AudioStream" uid="uid://dtewnlfhsjxnw" path="res://assets/sound-effects/scanner-beep.wav" id="18_7jlqr"]
+[ext_resource type="AudioStream" uid="uid://b5to2dtjlx1sc" path="res://assets/sound-effects/bandage.wav" id="19_6oaqi"]
 [ext_resource type="AudioStream" uid="uid://bukgq5s5y6yv7" path="res://assets/sound-effects/scanner-malfunction.wav" id="19_fm6b3"]
 [ext_resource type="AudioStream" uid="uid://d3b3wo5ih88a" path="res://assets/sound-effects/cash-register-sound.wav" id="20_lsw4y"]
 [ext_resource type="AudioStream" uid="uid://blh331b2u75ix" path="res://assets/sound-effects/garage-door-closing.wav" id="21_3m0c4"]
 [ext_resource type="AudioStream" uid="uid://2h6uhe4pa0kk" path="res://assets/sound-effects/error.wav" id="22_c4rwu"]
 [ext_resource type="AudioStream" uid="uid://bgur24hur70yb" path="res://assets/music/cashier-superstar-theme.wav" id="23_el85b"]
+[ext_resource type="Texture2D" uid="uid://br72b6nuv6pl2" path="res://assets/images/music-note.svg" id="26_l7yri"]
+[ext_resource type="Texture2D" uid="uid://c7sxknc6oh76w" path="res://assets/images/sfx.svg" id="27_4olh5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ax30s"]
+size = Vector2(345.5, 143.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnmxc"]
-size = Vector2(429, 137)
+size = Vector2(429, 133)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nf8nf"]
 size = Vector2(295, 212)
@@ -37,21 +44,6 @@ size = Vector2(82, 132)
 
 [sub_resource type="SystemFont" id="SystemFont_ycg2y"]
 font_names = PackedStringArray("Monospace")
-
-[sub_resource type="Shader" id="Shader_f42p3"]
-code = "shader_type canvas_item;
-
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-uniform float lod: hint_range(0.0, 5) = 0.0;
-
-void fragment(){
-	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV, lod);
-	COLOR = color;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tt4e5"]
-shader = SubResource("Shader_f42p3")
-shader_parameter/lod = 3.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7r8et")
@@ -171,14 +163,14 @@ theme_override_font_sizes/font_size = 90
 [node name="LivesZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LivesZone"]
-position = Vector2(1129, 383)
-shape = SubResource("RectangleShape2D_wnmxc")
+position = Vector2(1087.25, 386.25)
+shape = SubResource("RectangleShape2D_ax30s")
 disabled = true
 
 [node name="ScannerZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScannerZone"]
-position = Vector2(303.5, 589.5)
+position = Vector2(303.5, 587.5)
 shape = SubResource("RectangleShape2D_wnmxc")
 
 [node name="EndZone" type="Area2D" parent="."]
@@ -204,22 +196,25 @@ texture = SubResource("PlaceholderTexture2D_qxbdk")
 
 [node name="PauseButton" type="Button" parent="."]
 process_mode = 3
-offset_left = 1217.0
-offset_top = 598.0
-offset_right = 1247.0
-offset_bottom = 655.0
+z_index = 30
+offset_left = 1134.0
+offset_top = 594.0
+offset_right = 1238.0
+offset_bottom = 698.0
 theme_override_font_sizes/font_size = 35
 toggle_mode = true
-text = "II"
+icon = ExtResource("13_4ywat")
+flat = true
+icon_alignment = 1
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="ItemCodeLabel" type="Label" parent="."]
-offset_left = 1022.0
-offset_top = 578.0
-offset_right = 1194.0
-offset_bottom = 681.0
+offset_left = 949.0
+offset_top = 594.0
+offset_right = 1121.0
+offset_bottom = 697.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.105882, 0.345098, 1, 1)
 theme_override_constants/outline_size = 20
@@ -644,13 +639,6 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BlurEffect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_tt4e5")
-offset_right = 1280.0
-offset_bottom = 720.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-
 [node name="MetalShutter" type="TextureRect" parent="."]
 z_index = 100
 offset_top = -960.0
@@ -662,32 +650,90 @@ texture = ExtResource("16_3n32m")
 [node name="KeyPressSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_4gt41")
 volume_db = -10.0
+bus = &"Fx"
 
 [node name="ScannerBeepSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_7jlqr")
 volume_db = -10.0
+bus = &"Fx"
+
+[node name="BandageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_6oaqi")
+volume_db = -10.0
+bus = &"Fx"
 
 [node name="ScannerMalfunctionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_fm6b3")
 volume_db = -10.0
+bus = &"Fx"
 
 [node name="CashRegisterSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_lsw4y")
-volume_db = -40.0
+volume_db = -20.0
+bus = &"Fx"
 
 [node name="GarageDoorSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_3m0c4")
 volume_db = -20.0
+bus = &"Fx"
 
 [node name="ErrorSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_c4rwu")
 volume_db = -15.0
+bus = &"Fx"
 
 [node name="ThemePlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_el85b")
 autoplay = true
+bus = &"Music"
+
+[node name="Shade" type="ColorRect" parent="."]
+z_index = 20
+offset_right = 1301.0
+offset_bottom = 764.0
+mouse_filter = 2
+color = Color(0.192157, 0.192157, 0.192157, 0.784314)
+
+[node name="VolumeSliders" type="VBoxContainer" parent="."]
+visible = false
+z_index = 30
+offset_left = 906.0
+offset_top = 40.0
+offset_right = 1260.0
+offset_bottom = 122.0
+theme_override_constants/separation = 50
+
+[node name="MusicSlider" type="HSlider" parent="VolumeSliders"]
+layout_mode = 2
+min_value = -50.0
+max_value = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="VolumeSliders/MusicSlider"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -18.0
+offset_right = -4.0
+offset_bottom = 30.0
+texture = ExtResource("26_l7yri")
+stretch_mode = 2
+
+[node name="FxSlider" type="HSlider" parent="VolumeSliders"]
+layout_mode = 2
+min_value = -50.0
+max_value = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="VolumeSliders/FxSlider"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -18.0
+offset_right = -4.0
+offset_bottom = 30.0
+texture = ExtResource("27_4olh5")
+stretch_mode = 2
 
 [connection signal="area_entered" from="ScannerZone" to="." method="_on_scanner_zone_area_entered"]
 [connection signal="area_entered" from="EndZone" to="." method="_on_end_zone_area_entered"]
 [connection signal="toggled" from="PauseButton" to="." method="_on_button_toggled"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="value_changed" from="VolumeSliders/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="VolumeSliders/FxSlider" to="." method="_on_fx_slider_value_changed"]

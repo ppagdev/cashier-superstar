@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuams2roor781"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_r51ck"]
+[ext_resource type="Texture2D" uid="uid://b3qk45a0xes1o" path="res://assets/images/box-of-chocolates.png" id="2_iav3a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjfl"]
+size = Vector2(214.999, 229.001)
+
+[node name="BoxOfChocolates" type="Node2D"]
+script = ExtResource("1_r51ck")
+code = "7647"
+price = 6.99
+product = "box_of_chocolates"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4.5, -3.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_1gjfl")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("2_iav3a")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

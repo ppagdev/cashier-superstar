@@ -7,6 +7,7 @@ var scanned = false
 var scanning = false
 @export var code = "0000"
 @export var price = 0.0
+@export var product = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

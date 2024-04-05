@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://boiy3csy8ken0"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_mr3ii"]
+[ext_resource type="Texture2D" uid="uid://b3krqpnxaasv3" path="res://assets/images/warning-sign.png" id="2_l48oy"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ly64w"]
+points = PackedVector2Array(110, -123, -120, 3, 110, 125)
+
+[node name="WarningSign" type="Node2D"]
+script = ExtResource("1_mr3ii")
+code = "7677"
+price = 10.99
+product = "warning_sign"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource("ConvexPolygonShape2D_ly64w")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("2_l48oy")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

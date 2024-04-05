@@ -2,9 +2,36 @@ extends Node2D
 
 var life_scene = preload("res://scenes/life.tscn")
 var lose_screen_scene = "res://scenes/lose_screen.tscn"
+
+# item scenes
 var bread_scene = preload("res://scenes/bread.tscn")
 var milk_carton_scene = preload("res://scenes/milk_carton.tscn")
+var first_aid_kit_scene = preload("res://scenes/first_aid_kit.tscn")
+var warning_sign_scene = preload("res://scenes/warning_sign.tscn")
+var cash_stack_scene = preload("res://scenes/cash_stack.tscn")
+var box_of_chocolates_scene = preload("res://scenes/box_of_chocolates.tscn")
+var donut_scene = preload("res://scenes/donut.tscn")
 
+#item odds
+var common = [
+	bread_scene,
+	milk_carton_scene,
+]
+var uncommon = [
+	donut_scene,
+]
+var rare = [
+	box_of_chocolates_scene,
+]
+var very_rare = [
+	first_aid_kit_scene,
+	warning_sign_scene,
+]
+var rarest = [
+	cash_stack_scene,
+]
+
+# good and bad messages
 var good_messages = [
 	"WELL DONE!",
 	"ALRIGHT!",
@@ -34,8 +61,13 @@ var base_spawn_time = 3.0
 var instanstiated_items = []
 var available_lives = []
 
+@onready var volume_sliders = get_node("VolumeSliders")
+@onready var fx_slider = get_node("VolumeSliders/FxSlider")
+@onready var fx_bus = AudioServer.get_bus_index("Fx")
+@onready var music_bus = AudioServer.get_bus_index("Music")
+@onready var music_slider = get_node("VolumeSliders/MusicSlider")
 @onready var shutter = get_node("MetalShutter")
-@onready var blur_effect = get_node("BlurEffect").material
+@onready var shade_effect = get_node("Shade")
 @onready var scanner_light = get_node("ScannerLight")
 @onready var item_code_label = get_node("ItemCodeLabel")
 @onready var scanner_label = get_node("ScannerLabel")
@@ -48,14 +80,19 @@ var available_lives = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	await decrease_blur()
+	await decrease_shade()
 	connect_buttons()
 	display_lives()
 	spawn_timer.wait_time = base_spawn_time
 
-func decrease_blur():
-	while blur_effect.get_shader_parameter("lod") > 0.0:
-		blur_effect.set_shader_parameter("lod", blur_effect.get_shader_parameter("lod") - 0.1)
+func increase_shade():
+	while shade_effect.color.a < 0.7:
+		shade_effect.color.a += 0.1
+		await get_tree().create_timer(0.01).timeout
+
+func decrease_shade():
+	while shade_effect.color.a > 0.0:
+		shade_effect.color.a -= 0.1
 		await get_tree().create_timer(0.01).timeout
 
 func get_score():
@@ -68,6 +105,14 @@ func increase_difficulty():
 	treadmill_speed *= difficulty_modifier
 	spawn_timer.wait_time /= difficulty_modifier
 
+func decrease_difficulty():
+	if difficulty <= 0:
+		return
+	difficulty -= 1
+	print("Difficulty " + str(difficulty))
+	treadmill_speed /= difficulty_modifier
+	spawn_timer.wait_time *= difficulty_modifier
+
 func create_item(item_scene):
 	var item = item_scene.instantiate()
 	item.position = spawn_zone_area.position
@@ -76,10 +121,17 @@ func create_item(item_scene):
 
 func choose_item():
 	var random_float = randf()
-	if random_float < 0.5:
-		return bread_scene
+	#return box_of_chocolates_scene #debug
+	if random_float < 0.75:
+		return common.pick_random()
+	elif random_float < 0.93:
+		return uncommon.pick_random()
+	elif random_float < 0.98:
+		return rare.pick_random()
+	elif random_float < 0.995:
+		return very_rare.pick_random()
 	else:
-		return milk_carton_scene
+		return rarest.pick_random()
 
 func spawn_item():
 	var item_scene = choose_item()
@@ -104,9 +156,9 @@ func lose():
 	var score = get_score()
 	Player.latest_items_done = items_done
 	Player.latest_score = score
-	Player.money += score
-	print("You made $" + str(score))
-	print("You now have $" + str(Player.money))
+	if score > Player.player["high_score"]:
+		Player.player["high_score"] = score
+	Player.save()
 	await shutter_animation()
 	await get_tree().create_timer(1.5).timeout
 	get_tree().change_scene_to_file(lose_screen_scene)
@@ -174,9 +226,26 @@ func get_good_message():
 func get_bad_message():
 	return bad_messages.pick_random()
 
+func first_aid():
+	if lives < 3:
+		lives += 1
+	display_lives()
+	get_node("BandageSound").play()
+
+func warning_sign():
+	decrease_difficulty()
+
 func checkout(area):
-	# play cha ching sound effect
-	get_node("CashRegisterSound").play()
+	# handle first aid kit
+	if area.get_parent().product == "first_aid_kit":
+		first_aid()
+	
+	elif area.get_parent().product == "warning_sign":
+		warning_sign()
+	
+	else:
+		# play cha ching sound effect
+		get_node("CashRegisterSound").play()
 	
 	# handle item
 	area.get_parent().done = true
@@ -202,7 +271,8 @@ func strike(area):
 	
 	instanstiated_items.erase(area)
 	area.queue_free()
-	lives -= 1
+	if area.get_parent().product != "first_aid_kit" and area.get_parent().product != "warning_sign":
+		lives -= 1
 	display_lives()
 	# print bad message
 	if !scanner_off:
@@ -244,6 +314,11 @@ func _on_scanner_zone_area_entered(area):
 
 func _on_button_toggled(toggled_on):
 	get_tree().paused = toggled_on
+	volume_sliders.visible = toggled_on
+	if toggled_on:
+		increase_shade()
+	elif !toggled_on:
+		decrease_shade()
 
 
 func _on_spawn_timer_timeout():
@@ -262,3 +337,10 @@ func _on_button_pressed(arg):
 	if len(scanner_label.text) > 3:
 		return
 	scanner_label.text += arg
+
+func _on_music_slider_value_changed(value):
+	AudioServer.set_bus_volume_db(music_bus, value)
+
+
+func _on_fx_slider_value_changed(value):
+	AudioServer.set_bus_volume_db(fx_bus, value)

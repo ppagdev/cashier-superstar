@@ -15,26 +15,13 @@
 [ext_resource type="Texture2D" uid="uid://bmie83r2a05lx" path="res://assets/images/button.png" id="14_64kqr"]
 [ext_resource type="Texture2D" uid="uid://b6hfgqmrsck1s" path="res://assets/images/button-pressed.png" id="15_3ypxu"]
 [ext_resource type="AudioStream" uid="uid://dv3ka4og4t3cn" path="res://assets/music/cashier-superstar-main-menu-theme.wav" id="15_4gsc8"]
+[ext_resource type="Texture2D" uid="uid://br72b6nuv6pl2" path="res://assets/images/music-note.svg" id="16_igy2w"]
+[ext_resource type="Texture2D" uid="uid://c7sxknc6oh76w" path="res://assets/images/sfx.svg" id="17_uap8h"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qxbdk"]
 
 [sub_resource type="SystemFont" id="SystemFont_ycg2y"]
 font_names = PackedStringArray("Monospace")
-
-[sub_resource type="Shader" id="Shader_4eskb"]
-code = "shader_type canvas_item;
-
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-uniform float lod: hint_range(0.0, 5) = 0.0;
-
-void fragment(){
-	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV, lod);
-	COLOR = color;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5v5y"]
-shader = SubResource("Shader_4eskb")
-shader_parameter/lod = 3.0
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_sput0")
@@ -590,16 +577,64 @@ theme_override_font_sizes/font_size = 100
 text = "TAP ANYWHERE TO START"
 flat = true
 
-[node name="BlurEffect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_r5v5y")
-offset_right = 1280.0
-offset_bottom = 720.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-
 [node name="MainMenuThemePlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_4gsc8")
 volume_db = -30.0
 autoplay = true
+bus = &"Music"
+
+[node name="Shade" type="ColorRect" parent="."]
+offset_right = 1301.0
+offset_bottom = 764.0
+mouse_filter = 2
+color = Color(0.192157, 0.192157, 0.192157, 0.784314)
+
+[node name="HighScoreLabel" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 466.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 75
+text = "HIGH SCORE:"
+
+[node name="VolumeSliders" type="VBoxContainer" parent="."]
+offset_left = 906.0
+offset_top = 40.0
+offset_right = 1260.0
+offset_bottom = 107.0
+theme_override_constants/separation = 50
+
+[node name="MusicSlider" type="HSlider" parent="VolumeSliders"]
+layout_mode = 2
+min_value = -50.0
+max_value = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="VolumeSliders/MusicSlider"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -18.0
+offset_right = -4.0
+offset_bottom = 30.0
+texture = ExtResource("16_igy2w")
+stretch_mode = 2
+
+[node name="FxSlider" type="HSlider" parent="VolumeSliders"]
+layout_mode = 2
+min_value = -50.0
+max_value = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="VolumeSliders/FxSlider"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -18.0
+offset_right = -4.0
+offset_bottom = 30.0
+texture = ExtResource("17_uap8h")
+stretch_mode = 2
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="value_changed" from="VolumeSliders/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="VolumeSliders/FxSlider" to="." method="_on_fx_slider_value_changed"]

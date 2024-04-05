@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://vn17gbge40ub"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_rlg7v"]
+[ext_resource type="Texture2D" uid="uid://otfcnhasfi6b" path="res://assets/images/donut.png" id="2_7ebro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjfl"]
+size = Vector2(214.999, 229.001)
+
+[node name="Donut" type="Node2D"]
+script = ExtResource("1_rlg7v")
+code = "4714"
+price = 2.19
+product = "box_of_chocolates"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4.5, -3.5)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_1gjfl")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("2_7ebro")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

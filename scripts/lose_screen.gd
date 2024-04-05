@@ -15,5 +15,4 @@ func _ready():
 	start_button.disabled = false
 
 func _on_start_screen_button_pressed():
-	print("press")
 	get_tree().change_scene_to_file(main_menu)
